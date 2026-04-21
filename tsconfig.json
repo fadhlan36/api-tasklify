@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    // Matikan ini karena ini yang menyebabkan konflik dengan CommonJS
+    "verbatimModuleSyntax": false,
+    "isolatedModules": true
+  },
+  "include": ["src/**/*"]
+}
