@@ -1,21 +1,21 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import cors from 'cors';
 import * as dotenv from 'dotenv';
-import { PrismaClient } from '@prisma/client';
+import authRoutes from './routes/auth.route';
+import boardRoutes from './routes/board.route';
 
 dotenv.config();
 
 const app = express();
-const prisma = new PrismaClient();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Tasklify API is running...');
-});
+// Daftarkan Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/boards', boardRoutes);
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server ready at http://localhost:${PORT}`);
+  console.log(`🚀 Tasklify API running on http://localhost:${PORT}`);
 });
