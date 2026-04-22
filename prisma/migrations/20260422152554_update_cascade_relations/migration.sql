@@ -1,0 +1,29 @@
+-- DropForeignKey
+ALTER TABLE "board_members" DROP CONSTRAINT "board_members_board_id_fkey";
+
+-- DropForeignKey
+ALTER TABLE "columns" DROP CONSTRAINT "columns_board_id_fkey";
+
+-- DropForeignKey
+ALTER TABLE "task_labels" DROP CONSTRAINT "task_labels_label_id_fkey";
+
+-- DropForeignKey
+ALTER TABLE "task_labels" DROP CONSTRAINT "task_labels_task_id_fkey";
+
+-- DropForeignKey
+ALTER TABLE "tasks" DROP CONSTRAINT "tasks_column_id_fkey";
+
+-- AddForeignKey
+ALTER TABLE "board_members" ADD CONSTRAINT "board_members_board_id_fkey" FOREIGN KEY ("board_id") REFERENCES "boards"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "columns" ADD CONSTRAINT "columns_board_id_fkey" FOREIGN KEY ("board_id") REFERENCES "boards"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "tasks" ADD CONSTRAINT "tasks_column_id_fkey" FOREIGN KEY ("column_id") REFERENCES "columns"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "task_labels" ADD CONSTRAINT "task_labels_task_id_fkey" FOREIGN KEY ("task_id") REFERENCES "tasks"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "task_labels" ADD CONSTRAINT "task_labels_label_id_fkey" FOREIGN KEY ("label_id") REFERENCES "labels"("id") ON DELETE CASCADE ON UPDATE CASCADE;

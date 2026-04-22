@@ -52,7 +52,8 @@ model BoardMember {
   role     BoardRole @default(MEMBER)
   joinedAt DateTime  @default(now()) @map("joined_at")
 
-  board Board @relation(fields: [boardId], references: [id])
+  // onDelete: Cascade memastikan data member hapus otomatis saat board dihapus
+  board Board @relation(fields: [boardId], references: [id], onDelete: Cascade)
   user  User  @relation(fields: [userId], references: [id])
 
   @@id([boardId, userId])
@@ -68,7 +69,8 @@ model Column {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  board Board  @relation(fields: [boardId], references: [id])
+  // onDelete: Cascade memastikan kolom hapus otomatis saat board dihapus
+  board Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
   tasks Task[]
 
   @@map("columns")
@@ -85,7 +87,8 @@ model Task {
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime  @updatedAt @map("updated_at")
 
-  column Column      @relation(fields: [columnId], references: [id])
+  // onDelete: Cascade memastikan task hapus otomatis saat kolom dihapus
+  column Column      @relation(fields: [columnId], references: [id], onDelete: Cascade)
   labels TaskLabel[]
 
   @@map("tasks")
@@ -105,8 +108,9 @@ model TaskLabel {
   taskId  String @map("task_id")
   labelId String @map("label_id")
 
-  task  Task  @relation(fields: [taskId], references: [id])
-  label Label @relation(fields: [labelId], references: [id])
+  // onDelete: Cascade memastikan relasi label hapus otomatis saat task/label dihapus
+  task  Task  @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  label Label @relation(fields: [labelId], references: [id], onDelete: Cascade)
 
   @@id([taskId, labelId])
   @@map("task_labels")
