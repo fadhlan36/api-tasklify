@@ -3,6 +3,7 @@ import cors from 'cors';
 import * as dotenv from 'dotenv';
 import authRoutes from './routes/auth.route';
 import boardRoutes from './routes/board.route';
+import taskRoutes from './routes/task.toute';
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 // Daftarkan Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/boards', boardRoutes);
+app.use('/api/tasks', taskRoutes);
 
 app.listen(PORT, () => {
   console.log(`🚀 Tasklify API running on http://localhost:${PORT}`);
