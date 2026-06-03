@@ -56,9 +56,22 @@ export const getUserBoards = async (req: AuthRequest, res: Response) => {
         const userId = req.user?.userId;
         if (!userId) return res.status(401).json({ message: "User tidak terautentikasi" });
 
+        // const boards = await prisma.board.findMany({
+        //     where: {
+        //         members: { some: { userId } }
+        //     },
+        //     orderBy: { createdAt: 'desc' }
+        // });
+
         const boards = await prisma.board.findMany({
             where: {
                 members: { some: { userId } }
+            },
+            select: {
+                id: true,
+                title: true,
+                color: true,
+                createdAt: true
             },
             orderBy: { createdAt: 'desc' }
         });
@@ -90,7 +103,11 @@ export const getBoardDetail = async (req: AuthRequest, res: Response) => {
                 columns: {
                     orderBy: { order: 'asc' },
                     include: {
-                        tasks: { orderBy: { order: 'asc' } }
+                        // tasks: { orderBy: { order: 'asc' } }
+                        tasks: {
+                            take: 20,
+                            orderBy: { order: 'asc' }
+                        }
                     }
                 }
             }

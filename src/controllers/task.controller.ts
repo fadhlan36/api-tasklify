@@ -20,9 +20,24 @@ export const createTask = async (req: AuthRequest, res: Response) => {
     if (!title || !columnId)
       return res.status(400).json({ message: "Title dan columnId wajib diisi" });
 
+    // const column = await prisma.column.findUnique({
+    //   where: { id: columnId },
+    //   include: { board: { include: { members: true } } },
+    // });
+
     const column = await prisma.column.findUnique({
       where: { id: columnId },
-      include: { board: { include: { members: true } } },
+      select: {
+        board: {
+          select: {
+            members: {
+              select: {
+                userId: true,
+              },
+            },
+          },
+        },
+      },
     });
 
     if (!column) return res.status(404).json({ message: "Column tidak ditemukan" });
